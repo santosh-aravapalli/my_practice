@@ -1,0 +1,16 @@
+[Unit]
+Description=Gunicorn instance to serve One
+After=network.target
+
+[Service]
+User=sitapi
+Group=nginx
+WorkingDirectory=/DISK01/APIS/traiapis/traivil
+ExecStart=/usr/local/bin/gunicorn --workers 5 --bind unix:/DISK01/APIS/traiapis/traivil/traivil.sock -m 012 traivil.wsgi:application --log-level error --error-logfile /DISK01/LOGS/GUNICORN/traivil/traivil-apiworker.log
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
